@@ -61,38 +61,42 @@ const mockDashboardData: DashboardData = {
 };
 
 export async function fetchDashboardData(): Promise<{ data: DashboardData | null; status: string; error?: string }> {
-  // If env vars are missing, use mock data
-  if (!SHEET_ID || !API_KEY) {
+  if (process.env.GOOGLE_SHEETS_API_KEY && process.env.GOOGLE_SHEETS_SHEET_ID) {
+    connectionStatus = 'connecting';
+    try {
+      const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SHEET_RANGE}?key=${API_KEY}`;
+      const res = await fetch(url);
+      if (!res.ok) throw new Error('Failed to fetch Google Sheet');
+      const json = await res.json();
+      const rows = json.values;
+      if (!rows || rows.length < 2) throw new Error('No data in sheet');
+      // Parse header
+      const [header, ...dataRows] = rows;
+      // Map rows to objects
+      const records = dataRows.map((row: string[]) => {
+        const obj: any = {};
+        header.forEach((h: string, i: number) => {
+          obj[h] = row[i];
+        });
+        return obj;
+      });
+      // TODO: Map records to dashboardData fields
+      const dashboardData: DashboardData = mockDashboardData; // fallback to mock for now
+      cachedData = dashboardData;
+      lastFetch = Date.now();
+      connectionStatus = 'connected';
+      return { data: dashboardData, status: 'connected' };
+    } catch (e: any) {
+      console.warn('[Google Sheets] Error fetching data, using mock data:', e.message);
+      connectionStatus = 'mock';
+      return { data: mockDashboardData, status: 'mock', error: e.message };
+    }
+  } else {
+    if (typeof window !== 'undefined') {
+      console.warn('[Google Sheets] GOOGLE_SHEETS_API_KEY or GOOGLE_SHEETS_SHEET_ID not set. Using mock data.');
+    }
     connectionStatus = 'mock';
     return { data: mockDashboardData, status: 'mock' };
-  }
-  connectionStatus = 'connecting';
-  try {
-    const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SHEET_RANGE}?key=${API_KEY}`;
-    const res = await fetch(url);
-    if (!res.ok) throw new Error('Failed to fetch Google Sheet');
-    const json = await res.json();
-    const rows = json.values;
-    if (!rows || rows.length < 2) throw new Error('No data in sheet');
-    // Parse header
-    const [header, ...dataRows] = rows;
-    // Map rows to objects
-    const records = dataRows.map((row: string[]) => {
-      const obj: any = {};
-      header.forEach((h: string, i: number) => {
-        obj[h] = row[i];
-      });
-      return obj;
-    });
-    // TODO: Map records to dashboardData fields
-    const dashboardData: DashboardData = mockDashboardData; // fallback to mock for now
-    cachedData = dashboardData;
-    lastFetch = Date.now();
-    connectionStatus = 'connected';
-    return { data: dashboardData, status: 'connected' };
-  } catch (e: any) {
-    connectionStatus = 'mock';
-    return { data: mockDashboardData, status: 'mock', error: e.message };
   }
 }
 
