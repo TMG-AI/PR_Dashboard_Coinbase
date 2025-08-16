@@ -1,0 +1,68 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Mention {
+  id            String   @id @default(cuid())
+  timestamp     DateTime
+  platform      String
+  content       String
+  sentiment     String
+  sentimentScore Float
+  reach         Int
+  authorHandle  String?
+  publication   String?
+  headline      String?
+  type          String   // news, social, blog, etc.
+  topics        String[]
+  influencer    Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  @@index([timestamp])
+  @@index([platform])
+  @@index([sentiment])
+}
+
+model Alert {
+  id            String   @id @default(cuid())
+  level         String   // critical, high, medium, low
+  title         String
+  description   String
+  source        String
+  resolved      Boolean  @default(false)
+  triggeredAt   DateTime
+  resolvedAt    DateTime?
+  escalation    String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  @@index([level])
+  @@index([triggeredAt])
+}
+
+model Report {
+  id            String   @id @default(cuid())
+  generatedAt   DateTime @default(now())
+  type          String   // daily, weekly, executive
+  summary       String
+  pdfUrl        String?
+  competitorAnalysis String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  @@index([generatedAt])
+}
+
+model Analytics {
+  id            String   @id @default(cuid())
+  date          DateTime
+  metric        String
+  value         Float
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  @@index([date])
+  @@index([metric])
+}

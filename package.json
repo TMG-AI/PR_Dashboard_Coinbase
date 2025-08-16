@@ -1,0 +1,27 @@
+{
+  "name": "coinbase-pr-dashboard",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "typescript": "latest",
+    "tailwindcss": "latest",
+    "@headlessui/react": "latest",
+    "@heroicons/react": "latest",
+    "chart.js": "latest",
+    "recharts": "latest",
+    "clsx": "latest",
+    "@fontsource/inter": "latest"
+  },
+  "devDependencies": {
+    "autoprefixer": "latest",
+    "postcss": "latest"
+  }
+}

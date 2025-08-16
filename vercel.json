@@ -1,0 +1,43 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "next.config.js", "use": "@vercel/next" }
+  ],
+  "env": {
+    "GOOGLE_SHEETS_API_KEY": "@GOOGLE_SHEETS_API_KEY",
+    "GOOGLE_SHEETS_SHEET_ID": "@GOOGLE_SHEETS_SHEET_ID",
+    "NEXT_PUBLIC_APP_NAME": "@NEXT_PUBLIC_APP_NAME",
+    "NEXT_PUBLIC_CLIENT_NAME": "@NEXT_PUBLIC_CLIENT_NAME",
+    "MELTWATER_API_KEY": "@MELTWATER_API_KEY",
+    "TWITTER_BEARER_TOKEN": "@TWITTER_BEARER_TOKEN",
+    "REDDIT_CLIENT_ID": "@REDDIT_CLIENT_ID",
+    "REDDIT_SECRET": "@REDDIT_SECRET",
+    "OPENAI_API_KEY": "@OPENAI_API_KEY"
+  },
+  "crons": [
+    {
+      "path": "/api/collect-data",
+      "schedule": "*/15 * * * *"
+    },
+    {
+      "path": "/api/analyze-sentiment",
+      "schedule": "*/15 * * * *"
+    },
+    {
+      "path": "/api/crisis-monitor",
+      "schedule": "*/15 * * * *"
+    },
+    {
+      "path": "/api/generate-reports",
+      "schedule": "0 6 * * *"
+    },
+    {
+      "path": "/api/generate-reports",
+      "schedule": "0 6 * * 1"
+    },
+    {
+      "path": "/api/cleanup",
+      "schedule": "0 3 1 * *"
+    }
+  ]
+}
