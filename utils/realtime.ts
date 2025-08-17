@@ -22,7 +22,10 @@ export function simulateRealtimeData(prev: DashboardData): DashboardData {
     if (typeof m.value === 'number') {
       const newValue = randomDelta(m.value as number, 0.08);
       const change = ((newValue - (m.value as number)) / (m.value as number)) * 100;
-      return { ...m, value: newValue, change: Math.round(change), trend: change > 0 ? 'up' : change < 0 ? 'down' : 'neutral' };
+      let trend: 'up' | 'down' | 'neutral' = 'neutral';
+      if (change > 0) trend = 'up';
+      else if (change < 0) trend = 'down';
+      return { ...m, value: newValue, change: Math.round(change), trend };
     }
     return m;
   });

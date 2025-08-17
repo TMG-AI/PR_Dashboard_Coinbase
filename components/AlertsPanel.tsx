@@ -11,6 +11,10 @@ const levelColor = {
   green: 'bg-green-500',
   yellow: 'bg-yellow-400',
   red: 'bg-red-500',
+  critical: 'bg-red-700',
+  high: 'bg-red-500',
+  medium: 'bg-yellow-400',
+  low: 'bg-green-500',
 };
 
 export const AlertsPanel: React.FC<AlertsPanelProps> = ({ alerts, loading }) => {
@@ -31,7 +35,7 @@ export const AlertsPanel: React.FC<AlertsPanelProps> = ({ alerts, loading }) => 
               onClick={() => setExpanded(expanded === alert.id ? null : alert.id)}
             >
               <div className="flex items-center">
-                <span className={`w-3 h-3 rounded-full mr-3 ${levelColor[alert.level]}`} />
+                <span className={`w-3 h-3 rounded-full mr-3 ${levelColor[alert.level] || 'bg-gray-400'}`} />
                 <span className="font-medium text-white">{alert.title}</span>
                 <span className="ml-3 text-xs text-gray-400">{alert.time}</span>
               </div>

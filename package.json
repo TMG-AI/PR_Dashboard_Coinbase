@@ -11,12 +11,15 @@
     "@fontsource/inter": "latest",
     "@headlessui/react": "latest",
     "@heroicons/react": "latest",
+    "@prisma/client": "^6.14.0",
+    "axios": "latest",
     "chart.js": "latest",
     "clsx": "latest",
     "next": "latest",
     "react": "latest",
     "react-dom": "latest",
     "recharts": "latest",
+    "rss-parser": "latest",
     "tailwindcss": "latest",
     "typescript": "latest"
   },
@@ -24,6 +27,7 @@
     "@types/node": "^24.3.0",
     "@types/react": "^19.1.10",
     "autoprefixer": "latest",
-    "postcss": "latest"
+    "postcss": "latest",
+    "prisma": "^6.14.0"
   }
 }

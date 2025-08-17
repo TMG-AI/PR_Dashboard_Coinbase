@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import prisma from '../../lib/database';
+// @ts-ignore
+import prisma from '../../lib/prismaClient';
 
 const RATE_LIMIT = 30;
 const rateLimitMap: Record<string, { count: number; last: number }> = {};

@@ -16,7 +16,7 @@ import { ExportModal } from '../components/ExportModal';
 import { MobileNavigation } from '../components/MobileNavigation';
 import { ConnectionStatus } from '../components/ConnectionStatus';
 import { Metric, Sentiment, CrisisAlert, Influencer, MediaCoverage, CompetitorData, Topic, FilterState } from '../types';
-import '@fontsource/inter/variable.css';
+import '@fontsource/inter/index.css';
 import '../styles/globals.css';
 
 const initialFilter: FilterState = {
@@ -127,8 +127,9 @@ export default function Dashboard() {
       setTimeout(() => setLiveBlink(false), 2000);
       fetchDashboardData();
     }, 30000);
-    return () => intervalRef.current && clearInterval(intervalRef.current);
-    // eslint-disable-next-line
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
   }, [filter]);
 
   // Manual refresh

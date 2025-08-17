@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const REDDIT_CLIENT_ID = process.env.REDDIT_CLIENT_ID;
-const REDDIT_SECRET = process.env.REDDIT_SECRET;
+const REDDIT_CLIENT_ID = process.env.REDDIT_CLIENT_ID || '';
+const REDDIT_SECRET = process.env.REDDIT_SECRET || '';
 const REDDIT_USER_AGENT = 'CoinbasePRBot/1.0';
 
 async function getRedditToken() {

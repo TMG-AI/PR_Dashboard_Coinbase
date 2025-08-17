@@ -38,7 +38,7 @@ export const PieChart: React.FC<PieChartProps> = ({ data, loading }) => {
             cy="50%"
             outerRadius={60}
             innerRadius={35}
-            label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+            label={({ name, percent }) => `${name} ${((percent ?? 0) * 100).toFixed(0)}%`}
           >
             {chartData.map((_, idx) => (
               <Cell key={`cell-${idx}`} fill={COLORS[idx]} />

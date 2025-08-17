@@ -1,5 +1,5 @@
 import React from 'react';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Cell } from 'recharts';
 import { CompetitorData } from '../types';
 
 interface CompetitorBarChartProps {
@@ -23,7 +23,7 @@ export const CompetitorBarChart: React.FC<CompetitorBarChartProps> = ({ data, lo
           <Tooltip contentStyle={{ background: '#10182b', border: 'none', color: '#fff' }} />
           <Bar dataKey="mentions" radius={[6, 6, 0, 0]}>
             {data.map((_, idx) => (
-              <cell key={`cell-${idx}`} fill={COLORS[idx % COLORS.length]} />
+              <Cell key={`cell-${idx}`} fill={COLORS[idx % COLORS.length]} />
             ))}
           </Bar>
         </BarChart>

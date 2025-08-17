@@ -19,7 +19,7 @@ model Mention {
   publication   String?
   headline      String?
   type          String   // news, social, blog, etc.
-  topics        String[]
+  topics        String   // store as comma-separated or JSON string
   influencer    Boolean  @default(false)
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
