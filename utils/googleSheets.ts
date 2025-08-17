@@ -4,8 +4,6 @@ let cachedData: DashboardData | null = null;
 let lastFetch = 0;
 let connectionStatus: 'connected' | 'error' | 'connecting' | 'mock' = 'mock';
 
-const SHEET_ID = process.env.GOOGLE_SHEETS_SHEET_ID;
-const API_KEY = process.env.GOOGLE_SHEETS_API_KEY;
 const SHEET_RANGE = 'Sheet1';
 
 // Example mock data for fallback
@@ -61,7 +59,11 @@ const mockDashboardData: DashboardData = {
 };
 
 export async function fetchDashboardData(): Promise<{ data: DashboardData | null; status: string; error?: string }> {
-  if (process.env.GOOGLE_SHEETS_API_KEY && process.env.GOOGLE_SHEETS_SHEET_ID) {
+  // Move environment variable declarations inside the function
+  const SHEET_ID = process.env.GOOGLE_SHEETS_SHEET_ID;
+  const API_KEY = process.env.GOOGLE_SHEETS_API_KEY;
+  
+  if (API_KEY && SHEET_ID) {
     connectionStatus = 'connecting';
     try {
       const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SHEET_RANGE}?key=${API_KEY}`;
