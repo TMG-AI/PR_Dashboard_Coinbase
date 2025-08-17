@@ -8,19 +8,21 @@
     "start": "next start"
   },
   "dependencies": {
-    "next": "latest",
-    "react": "latest",
-    "react-dom": "latest",
-    "typescript": "latest",
-    "tailwindcss": "latest",
+    "@fontsource/inter": "latest",
     "@headlessui/react": "latest",
     "@heroicons/react": "latest",
     "chart.js": "latest",
-    "recharts": "latest",
     "clsx": "latest",
-    "@fontsource/inter": "latest"
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "recharts": "latest",
+    "tailwindcss": "latest",
+    "typescript": "latest"
   },
   "devDependencies": {
+    "@types/node": "^24.3.0",
+    "@types/react": "^19.1.10",
     "autoprefixer": "latest",
     "postcss": "latest"
   }
