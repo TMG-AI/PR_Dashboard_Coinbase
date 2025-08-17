@@ -1,11 +1,5 @@
 import { DashboardData } from './realtime';
 
-let cachedData: DashboardData | null = null;
-let lastFetch = 0;
-let connectionStatus: 'connected' | 'error' | 'connecting' | 'mock' = 'mock';
-
-const SHEET_RANGE = 'Sheet1';
-
 // Example mock data for fallback
 const mockDashboardData: DashboardData = {
   metrics: [
@@ -59,49 +53,9 @@ const mockDashboardData: DashboardData = {
 };
 
 export async function fetchDashboardData(): Promise<{ data: DashboardData | null; status: string; error?: string }> {
-  // Move environment variable declarations inside the function
-  const SHEET_ID = process.env.GOOGLE_SHEETS_SHEET_ID;
-  const API_KEY = process.env.GOOGLE_SHEETS_API_KEY;
-  
-  if (API_KEY && SHEET_ID) {
-    connectionStatus = 'connecting';
-    try {
-      const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SHEET_RANGE}?key=${API_KEY}`;
-      const res = await fetch(url);
-      if (!res.ok) throw new Error('Failed to fetch Google Sheet');
-      const json = await res.json();
-      const rows = json.values;
-      if (!rows || rows.length < 2) throw new Error('No data in sheet');
-      // Parse header
-      const [header, ...dataRows] = rows;
-      // Map rows to objects
-      const records = dataRows.map((row: string[]) => {
-        const obj: any = {};
-        header.forEach((h: string, i: number) => {
-          obj[h] = row[i];
-        });
-        return obj;
-      });
-      // TODO: Map records to dashboardData fields
-      const dashboardData: DashboardData = mockDashboardData; // fallback to mock for now
-      cachedData = dashboardData;
-      lastFetch = Date.now();
-      connectionStatus = 'connected';
-      return { data: dashboardData, status: 'connected' };
-    } catch (e: any) {
-      console.warn('[Google Sheets] Error fetching data, using mock data:', e.message);
-      connectionStatus = 'mock';
-      return { data: mockDashboardData, status: 'mock', error: e.message };
-    }
-  } else {
-    if (typeof window !== 'undefined') {
-      console.warn('[Google Sheets] GOOGLE_SHEETS_API_KEY or GOOGLE_SHEETS_SHEET_ID not set. Using mock data.');
-    }
-    connectionStatus = 'mock';
-    return { data: mockDashboardData, status: 'mock' };
-  }
+  return { data: mockDashboardData, status: 'mock' };
 }
 
 export function getConnectionStatus() {
-  return connectionStatus;
+  return 'mock';
 }
