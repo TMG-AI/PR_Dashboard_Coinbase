@@ -4,8 +4,6 @@
     { "src": "next.config.js", "use": "@vercel/next" }
   ],
   "env": {
-    "GOOGLE_SHEETS_API_KEY": "@GOOGLE_SHEETS_API_KEY",
-    "GOOGLE_SHEETS_SHEET_ID": "@GOOGLE_SHEETS_SHEET_ID",
     "NEXT_PUBLIC_APP_NAME": "@NEXT_PUBLIC_APP_NAME",
     "NEXT_PUBLIC_CLIENT_NAME": "@NEXT_PUBLIC_CLIENT_NAME",
     "MELTWATER_API_KEY": "@MELTWATER_API_KEY",
